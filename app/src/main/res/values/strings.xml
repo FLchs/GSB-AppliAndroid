@@ -19,6 +19,8 @@
     <string name="montant">Montant :</string>
     <string name="title_frais_nuitee">Frais d\'hébergement</string>
     <string name="nuitee">Nuitée</string>
+    <string name="title_frais_etape">Frais d\'étapes</string>
+    <string name="etape">Étapes</string>
     <string name="icone_frais_km">Icone des frais kilométriques</string>
     <string name="icone_frais_repas">Icone des frais de repas</string>
     <string name="icone_frais_nuitee">Icone des frais de nuitée</string>
