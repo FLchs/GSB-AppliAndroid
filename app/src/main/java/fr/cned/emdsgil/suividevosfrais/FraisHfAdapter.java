@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,16 +15,20 @@ class FraisHfAdapter extends BaseAdapter {
 
 	private final ArrayList<FraisHf> lesFrais ; // liste des frais du mois
 	private final LayoutInflater inflater ;
+	private Integer key ; // annee et mois (clé dans la liste)
+	private Context context ;
 
-    /**
+	/**
 	 * Constructeur de l'adapter pour valoriser les propriétés
      * @param context Accès au contexte de l'application
      * @param lesFrais Liste des frais hors forfait
      */
-	public FraisHfAdapter(Context context, ArrayList<FraisHf> lesFrais) {
+	public FraisHfAdapter(Context context, ArrayList<FraisHf> lesFrais, Integer key) {
 		inflater = LayoutInflater.from(context) ;
+		this.context = context ;
 		this.lesFrais = lesFrais ;
-    }
+		this.key = key ;
+	}
 	
 	/**
 	 * retourne le nombre d'éléments de la listview
@@ -56,6 +61,7 @@ class FraisHfAdapter extends BaseAdapter {
 		TextView txtListJour ;
 		TextView txtListMontant ;
 		TextView txtListMotif ;
+		ImageButton cmdSuppHf ;
 	}
 	
 	/**
@@ -70,13 +76,23 @@ class FraisHfAdapter extends BaseAdapter {
 			holder.txtListJour = convertView.findViewById(R.id.txtListJour);
 			holder.txtListMontant = convertView.findViewById(R.id.txtListMontant);
 			holder.txtListMotif = convertView.findViewById(R.id.txtListMotif);
-			convertView.setTag(holder) ;
+			holder.cmdSuppHf = convertView.findViewById(R.id.cmdSuppHf);
+			convertView.setTag(holder);
 		}else{
 			holder = (ViewHolder)convertView.getTag();
 		}
 		holder.txtListJour.setText(String.format(Locale.FRANCE, "%d", lesFrais.get(index).getJour()));
 		holder.txtListMontant.setText(String.format(Locale.FRANCE, "%.2f", lesFrais.get(index).getMontant())) ;
-		holder.txtListMotif.setText(lesFrais.get(index).getMotif()) ;
+		holder.txtListMotif.setText(lesFrais.get(index).getMotif());
+		holder.cmdSuppHf.setTag(index);
+		holder.cmdSuppHf.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v) {
+				int position = (Integer)v.getTag() ;
+				Global.listFraisMois.get(key).getLesFraisHf().remove(position) ;
+				Serializer.serialize(Global.listFraisMois, context) ;
+				notifyDataSetChanged() ;
+			}
+		});
 		return convertView ;
 	}
 	
