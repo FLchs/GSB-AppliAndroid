@@ -150,7 +150,7 @@ public class NuiteeActivity extends AppCompatActivity {
 	 * Retour à l'activité principale (le menu)
 	 */
 	private void retourActivityPrincipale() {
-		Intent intent = new Intent(NuiteeActivity.this, MainActivity.class) ;
+		Intent intent = new Intent(NuiteeActivity.this, DashboardActivity.class) ;
 		startActivity(intent) ;
 	}
 }

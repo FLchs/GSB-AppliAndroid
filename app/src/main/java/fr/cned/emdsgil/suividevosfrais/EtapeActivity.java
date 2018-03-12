@@ -150,7 +150,7 @@ public class EtapeActivity extends AppCompatActivity {
 	 * Retour à l'activité principale (le menu)
 	 */
 	private void retourActivityPrincipale() {
-		Intent intent = new Intent(EtapeActivity.this, MainActivity.class) ;
+		Intent intent = new Intent(EtapeActivity.this, DashboardActivity.class) ;
 		startActivity(intent) ;   					
 	}
 }
