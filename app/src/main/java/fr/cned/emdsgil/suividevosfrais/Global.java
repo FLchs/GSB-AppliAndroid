@@ -18,7 +18,7 @@ abstract class Global {
 	*/
 
     // fichier contenant les informations sérialisées
-    public static final String filename = "save.fic";
+    public static final String filename = "save.json";
 
     /**
      * Modification de l'affichage de la date (juste le mois et l'année, sans le jour)

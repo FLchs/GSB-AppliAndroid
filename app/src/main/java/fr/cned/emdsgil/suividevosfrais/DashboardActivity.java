@@ -48,6 +48,8 @@ public class DashboardActivity extends AppCompatActivity {
          * on cast chaque valeur dans le type attendu.
          * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
         */
+        Serializer.deSerialize(DashboardActivity.this);
+
         Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(DashboardActivity.this);
         if (monHash != null) {
             Hashtable<Integer, FraisMois> monHashCast = new Hashtable<>();
