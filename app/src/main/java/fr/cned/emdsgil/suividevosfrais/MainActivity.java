@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
                             if (permLog) {
                                 // TODO: 3/20/18 Stockage en local du login/mdp
                             }
+                            // Stockage du login et mdp pour pouvoir les envoyer à chaques requettes.
+                            Global.login = login;
+                            Global.password = password;
+
                             Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intent);
                         }

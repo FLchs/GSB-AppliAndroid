@@ -31,7 +31,7 @@ public interface GsbAPI {
     Call<ResponseBody> post(
             //@HeaderMap Map<String, String> headers,
             @Query("data") String body,
-            // TODO: 3/24/18 Recuperation du login/mdp 
+            // TODO: 3/24/18 Recuperation du login/mdp
             @Query("login") String login,
             @Query("password") String password
     );

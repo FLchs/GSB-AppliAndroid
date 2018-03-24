@@ -35,7 +35,7 @@ public class Synchronizer {
 
         HashMap<String, String> headermap = new HashMap<String, String>();
         headermap.put("Content-type", "Application/json");
-        Call<ResponseBody> call = gsbAPI.post(jsonString, "paulo", "passzord");
+        Call<ResponseBody> call = gsbAPI.post(jsonString, Global.login, Global.password);
 
         call.enqueue(new Callback<ResponseBody>() {
 
