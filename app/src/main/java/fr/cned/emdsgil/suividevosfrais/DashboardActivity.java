@@ -89,7 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
         findViewById(R.id.cmdTransfert).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // envoi les informations sérialisées vers le serveur
-                // en construction
+                Synchronizer.syncToServer(Global.listFraisMois, DashboardActivity.this);
             }
         });
     }
