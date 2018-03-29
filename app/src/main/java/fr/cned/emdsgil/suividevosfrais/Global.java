@@ -20,8 +20,7 @@ abstract class Global {
     // fichier contenant les informations sérialisées
     public static final String filename = "save.json";
 
-    public static String login = new String();
-    public static String password = new String();
+    public static User user = new User();
 
     /**
      * Modification de l'affichage de la date (juste le mois et l'année, sans le jour)
