@@ -48,25 +48,9 @@ public class DashboardActivity extends AppCompatActivity {
          * on cast chaque valeur dans le type attendu.
          * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
         */
-        Serializer.deSerialize(DashboardActivity.this);
+        //Serializer.deSerialize(DashboardActivity.this);
+        //Synchronizer.syncFromServer(DashboardActivity.this);
 
-        Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(DashboardActivity.this);
-        if (monHash != null) {
-            Hashtable<Integer, FraisMois> monHashCast = new Hashtable<>();
-            for (Hashtable.Entry<?, ?> entry : monHash.entrySet()) {
-                monHashCast.put((Integer) entry.getKey(), (FraisMois) entry.getValue());
-            }
-            Global.listFraisMois = monHashCast;
-        }
-        // si rien n'a été récupéré, il faut créer la liste
-        if (Global.listFraisMois == null) {
-            Global.listFraisMois = new Hashtable<>();
-            /* Retrait du type de l'HashTable (Optimisation Android Studio)
-			 * Original : Typage explicit =
-			 * Global.listFraisMois = new Hashtable<Integer, FraisMois>();
-			*/
-
-        }
     }
 
     /**
@@ -89,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
         findViewById(R.id.cmdTransfert).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // envoi les informations sérialisées vers le serveur
-                Synchronizer.syncToServer(Global.listFraisMois, DashboardActivity.this);
+                Synchronizer.syncToServer(Global.user, Global.listFraisMois, DashboardActivity.this);
             }
         });
     }

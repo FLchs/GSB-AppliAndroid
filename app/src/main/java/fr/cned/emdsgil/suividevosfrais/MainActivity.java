@@ -30,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
         //verifier si le login est stocké dans le serializer
         // si oui, on redirige vers main, sinon vers login
+        Global.user = SaveUser.load(MainActivity.this);
+
+        if (Global.user != null) {
+            Synchronizer.syncFromServer(Global.user,MainActivity.this);
+
+            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(intent);
+        }
+
 
         setContentView(R.layout.activity_main);
         setTitle("GSB : Suivi des frais");
@@ -79,10 +88,13 @@ public class MainActivity extends AppCompatActivity {
                             // Si le login est bon et que la checkbox "rester connecté" est coché, on stocke le login/mdp
                             if (permLog) {
                                 // TODO: 3/20/18 Stockage en local du login/mdp
+                                SaveUser.save(login, password, MainActivity.this);
                             }
-                            // Stockage du login et mdp pour pouvoir les envoyer à chaques requettes.
-                            Global.login = login;
-                            Global.password = password;
+
+                            Global.user = new User();
+                            Global.user.setLoginPassword(login, password);
+                            // Stockage de l'utilisateur pour pouvoir l'envoyer à chaques requettes.
+                            Synchronizer.syncFromServer(Global.user, MainActivity.this);
 
                             Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
                             startActivity(intent);
