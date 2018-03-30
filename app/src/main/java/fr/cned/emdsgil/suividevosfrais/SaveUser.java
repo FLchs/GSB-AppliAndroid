@@ -68,4 +68,22 @@ public class SaveUser {
         return null;
     }
 
+    public static User delete(Context context) {
+        try {
+
+            FileOutputStream file = context.openFileOutput("user.json", Context.MODE_PRIVATE);
+            ObjectOutputStream oos;
+            oos = new ObjectOutputStream(file);
+
+            // Écriture de l'utilisateur dans le fichier.
+            oos.writeObject("");
+            oos.flush();
+            oos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

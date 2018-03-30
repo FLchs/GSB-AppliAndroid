@@ -1,13 +1,18 @@
 package fr.cned.emdsgil.suividevosfrais;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.Hashtable;
 
@@ -36,6 +41,14 @@ public class DashboardActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getTitle().equals(getString(R.string.disconnect))) {
+            disconnect() ;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -77,4 +90,32 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Bouton de déconnexion
+     */
+    private void disconnect() {
+
+                AlertDialog alertDialog = new AlertDialog.Builder(DashboardActivity.this).create();
+                alertDialog.setTitle("Déconnexion");
+                alertDialog.setMessage("Attention, toutes les données non synchronisées seront perdues.");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Déconnexion",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(DashboardActivity.this, "Déconnexion...", Toast.LENGTH_SHORT).show();
+                                Global.user = SaveUser.delete(DashboardActivity.this);
+                                Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler",
+                new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
+            }
+
 }
