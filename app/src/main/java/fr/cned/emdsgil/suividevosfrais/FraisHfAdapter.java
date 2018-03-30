@@ -89,7 +89,6 @@ class FraisHfAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				int position = (Integer)v.getTag() ;
 				Global.listFraisMois.get(key).getLesFraisHf().remove(position) ;
-				Serializer.serialize(Global.listFraisMois, context) ;
 				notifyDataSetChanged() ;
 			}
 		});

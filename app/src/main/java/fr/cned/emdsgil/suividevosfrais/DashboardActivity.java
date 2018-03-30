@@ -1,13 +1,18 @@
 package fr.cned.emdsgil.suividevosfrais;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.Hashtable;
 
@@ -18,8 +23,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         setTitle("GSB : Suivi des frais");
-        // récupération des informations sérialisées
-        recupSerialize();
         // chargement des méthodes événementielles
         cmdMenu_clic(((ImageButton) findViewById(R.id.cmdKm)), KmActivity.class);
         cmdMenu_clic(((ImageButton) findViewById(R.id.cmdRepas)), RepasActivity.class);
@@ -38,34 +41,14 @@ public class DashboardActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Récupère la sérialisation si elle existe
-     */
-    private void recupSerialize() {
-        /* Pour éviter le warning "Unchecked cast from Object to Hash" produit par un casting direct :
-         * Global.listFraisMois = (Hashtable<Integer, FraisMois>) Serializer.deSerialize(Global.filename, DashboardActivity.this);
-         * On créé un Hashtable générique <?,?> dans lequel on récupère l'Object retourné par la méthode deSerialize, puis
-         * on cast chaque valeur dans le type attendu.
-         * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
-        */
-        Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(DashboardActivity.this);
-        if (monHash != null) {
-            Hashtable<Integer, FraisMois> monHashCast = new Hashtable<>();
-            for (Hashtable.Entry<?, ?> entry : monHash.entrySet()) {
-                monHashCast.put((Integer) entry.getKey(), (FraisMois) entry.getValue());
-            }
-            Global.listFraisMois = monHashCast;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getTitle().equals(getString(R.string.disconnect))) {
+            disconnect() ;
         }
-        // si rien n'a été récupéré, il faut créer la liste
-        if (Global.listFraisMois == null) {
-            Global.listFraisMois = new Hashtable<>();
-            /* Retrait du type de l'HashTable (Optimisation Android Studio)
-			 * Original : Typage explicit =
-			 * Global.listFraisMois = new Hashtable<Integer, FraisMois>();
-			*/
-
-        }
+        return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Sur la sélection d'un bouton dans l'activité principale ouverture de l'activité correspondante
@@ -87,8 +70,36 @@ public class DashboardActivity extends AppCompatActivity {
         findViewById(R.id.cmdTransfert).setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // envoi les informations sérialisées vers le serveur
-                // en construction
+                Synchronizer.syncToServer(Global.user, Global.listFraisMois, DashboardActivity.this);
             }
         });
     }
+
+    /**
+     * Bouton de déconnexion
+     */
+    private void disconnect() {
+
+                AlertDialog alertDialog = new AlertDialog.Builder(DashboardActivity.this).create();
+                alertDialog.setTitle("Déconnexion");
+                alertDialog.setMessage("Attention, toutes les données non synchronisées seront perdues.");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Déconnexion",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(DashboardActivity.this, "Déconnexion...", Toast.LENGTH_SHORT).show();
+                                Global.user = SaveUser.delete(DashboardActivity.this);
+                                Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Annuler",
+                new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
+            }
+
 }
