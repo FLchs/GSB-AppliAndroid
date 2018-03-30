@@ -17,8 +17,6 @@ abstract class Global {
 	 * public static Hashtable<Integer, FraisMois> listFraisMois = new Hashtable<Integer, FraisMois>();
 	*/
 
-    // fichier contenant les informations sérialisées
-    public static final String filename = "save.json";
 
     public static User user = new User();
 

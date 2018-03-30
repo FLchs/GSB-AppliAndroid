@@ -88,8 +88,7 @@ public class EtapeActivity extends AppCompatActivity {
     private void cmdValider_clic() {
     	findViewById(R.id.cmdEtapeValider).setOnClickListener(new Button.OnClickListener() {
     		public void onClick(View v) {
-    			Serializer.serialize(Global.listFraisMois, EtapeActivity.this) ;
-    			retourActivityPrincipale() ;    		
+    			retourActivityPrincipale() ;
     		}
     	}) ;    	
     }

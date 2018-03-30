@@ -62,8 +62,7 @@ public class HfActivity extends AppCompatActivity {
     	findViewById(R.id.cmdHfAjouter).setOnClickListener(new Button.OnClickListener() {
     		public void onClick(View v) {
     			enregListe() ;
-    			Serializer.serialize(Global.listFraisMois, HfActivity.this) ;
-    			retourActivityPrincipale() ;    		
+    			retourActivityPrincipale() ;
     		}
     	}) ;    	
     }

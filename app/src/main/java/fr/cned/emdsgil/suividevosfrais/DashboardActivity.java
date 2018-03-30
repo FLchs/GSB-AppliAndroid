@@ -23,8 +23,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         setTitle("GSB : Suivi des frais");
-        // récupération des informations sérialisées
-        recupSerialize();
         // chargement des méthodes événementielles
         cmdMenu_clic(((ImageButton) findViewById(R.id.cmdKm)), KmActivity.class);
         cmdMenu_clic(((ImageButton) findViewById(R.id.cmdRepas)), RepasActivity.class);
@@ -51,20 +49,6 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Récupère la sérialisation si elle existe
-     */
-    private void recupSerialize() {
-        /* Pour éviter le warning "Unchecked cast from Object to Hash" produit par un casting direct :
-         * Global.listFraisMois = (Hashtable<Integer, FraisMois>) Serializer.deSerialize(Global.filename, DashboardActivity.this);
-         * On créé un Hashtable générique <?,?> dans lequel on récupère l'Object retourné par la méthode deSerialize, puis
-         * on cast chaque valeur dans le type attendu.
-         * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
-        */
-        //Serializer.deSerialize(DashboardActivity.this);
-        //Synchronizer.syncFromServer(DashboardActivity.this);
-
-    }
 
     /**
      * Sur la sélection d'un bouton dans l'activité principale ouverture de l'activité correspondante
