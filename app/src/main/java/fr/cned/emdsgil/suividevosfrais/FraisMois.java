@@ -14,7 +14,7 @@ class FraisMois implements Serializable {
     private Integer km; // nombre de km du mois
     private Integer nuitee; // nombre de nuitées du mois
     private Integer repas; // nombre de repas du mois
-    private final ArrayList<FraisHf> lesFraisHf; // liste des frais hors forfait du mois
+    private ArrayList<FraisHf> lesFraisHf; // liste des frais hors forfait du mois
 
     public FraisMois(Integer annee, Integer mois) {
         this.annee = annee;
@@ -24,10 +24,7 @@ class FraisMois implements Serializable {
         this.nuitee = 0;
         this.repas = 0;
         lesFraisHf = new ArrayList<>();
-        /* Retrait du type de l'ArrayList (Optimisation Android Studio)
-		 * Original : Typage explicit =
-		 * lesFraisHf = new ArrayList<FraisHf>() ;
-		*/
+
     }
 
     /**
@@ -37,33 +34,13 @@ class FraisMois implements Serializable {
      * @param motif Justification du frais hors forfait
      */
     public void addFraisHf(Float montant, String motif, Integer jour) {
+        if (lesFraisHf == null) {
+            lesFraisHf = new ArrayList<FraisHf>();
+        }
         lesFraisHf.add(new FraisHf(montant, motif, jour));
     }
 
-    /**
-     * Suppression d'un frais hors forfait
-     *
-     * @param index Indice du frais hors forfait à supprimer
-     */
-    public void supprFraisHf(Integer index) {
-        lesFraisHf.remove(index);
-    }
 
-    public Integer getMois() {
-        return mois;
-    }
-
-    public void setMois(Integer mois) {
-        this.mois = mois;
-    }
-
-    public Integer getAnnee() {
-        return annee;
-    }
-
-    public void setAnnee(Integer annee) {
-        this.annee = annee;
-    }
 
     public Integer getEtape() {
         return etape;
