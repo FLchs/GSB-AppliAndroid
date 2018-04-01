@@ -21,24 +21,22 @@ public interface GsbAPI {
     String BASE_URL = "http://cned.francoislachese.fr/";
 
     @Headers("Content-Type: Application/json")
-    @POST(BASE_URL+"test/json/auth.php")
-
+    @POST(BASE_URL+"api/auth.php")
     Call<ResponseBody> login(
             @HeaderMap Map<String, String> headers,
             @Query("login") String login,
             @Query("password") String password
     );
 
-    @POST(BASE_URL+"test/json/write.php")
+    @POST(BASE_URL+"api/write.php")
     Call<ResponseBody> post(
             //@HeaderMap Map<String, String> headers,
             @Body RequestBody body,
-            // TODO: 3/24/18 Recuperation du login/mdp
             @Query("login") String login,
             @Query("password") String password
     );
 
-    @POST(BASE_URL+"test/json/read.php")
+    @POST(BASE_URL+"api/read.php")
     Call<Hashtable<Integer, FraisMois>> read(
             @HeaderMap Map<String, String> headers,
             @Query("login") String login,
